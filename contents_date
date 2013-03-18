@@ -1,0 +1,29 @@
+awk -v var="$col" < "$INPUT_PATH""$RDMS_DUMP_NAME" 'BEGIN { RS = "\f"; FS = "\0"; ORS="\n" } {print $var}' | head -n 100 > "$OUTPUT_PATH""$col_name"
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' > "$OUTPUT_PATH""$col_name"_DATE
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' > "$OUTPUT_PATH""$col_name"_YEAR
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $2}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | sed -e 's/^0//g' > "$OUTPUT_PATH""$col_name"_MONTH
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $3}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | sed -e 's/^0//g' > "$OUTPUT_PATH""$col_name"_DAY
+rm "$OUTPUT_PATH""$col_name"
+
+function conversion(){
+
+	sed -e 's/[ \t]\+/_/g' -e 's/,//g' "$1""$2" > "$1""$2"_spaces_trimmed_conversion_to_underscores
+	sed -e '/^$/d' "$1""$2"_spaces_trimmed_conversion_to_underscores > "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
+	sort -u "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces > "$1""$2"_uniq
+	rm "$1""$2" "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
+	mv "$1""$2"_spaces_trimmed_conversion_to_underscores "$NODE_IND_FILES"
+	mv "$1""$2"_uniq "$NODE_FILES"
+
+}
+
+conversion "$OUTPUT_PATH" "$col_name"_DATE
+conversion "$OUTPUT_PATH" "$col_name"_YEAR
+conversion "$OUTPUT_PATH" "$col_name"_MONTH
+conversion "$OUTPUT_PATH" "$col_name"_DAY
+
+#sed -e 's/[ \t]\+/_/g' -e 's/,//g' "$OUTPUT_PATH""$col_name"_YEAR > "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores
+#sed -e '/^$/d' "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores > "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
+#sort -u "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces > "$OUTPUT_PATH""$col_name"_YEAR_uniq
+#rm "$OUTPUT_PATH""$col_name"_YEAR "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
+#mv "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores "$NODE_IND_FILES"
+#mv "$OUTPUT_PATH""$col_name"_YEAR_uniq "$NODE_FILES"
