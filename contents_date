@@ -20,10 +20,3 @@ conversion "$OUTPUT_PATH" "$col_name"_DATE
 conversion "$OUTPUT_PATH" "$col_name"_YEAR
 conversion "$OUTPUT_PATH" "$col_name"_MONTH
 conversion "$OUTPUT_PATH" "$col_name"_DAY
-
-#sed -e 's/[ \t]\+/_/g' -e 's/,//g' "$OUTPUT_PATH""$col_name"_YEAR > "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores
-#sed -e '/^$/d' "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores > "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
-#sort -u "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces > "$OUTPUT_PATH""$col_name"_YEAR_uniq
-#rm "$OUTPUT_PATH""$col_name"_YEAR "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
-#mv "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores "$NODE_IND_FILES"
-#mv "$OUTPUT_PATH""$col_name"_YEAR_uniq "$NODE_FILES"
