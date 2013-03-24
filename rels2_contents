@@ -1,0 +1,5 @@
+node2_id=$(grep -w "$node2" "$NODE_FILES"nodes_index.csv | awk '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//')
+num_lines2=$(wc -l < "$INDICES_DIR""$node1"_replaced_by_indices)
+yes "$node2_id" | head -n "$num_lines2" > "$INDICES_DIR""$node2"_replaced_by_indices
+yes "$relation" | head -n "$num_lines2" > "$RELATION_TYPE_DIR""$relation"
+paste -d"\t" "$INDICES_DIR""$node1"_replaced_by_indices "$INDICES_DIR""$node2"_replaced_by_indices "$RELATION_TYPE_DIR""$relation" > "$RELATIONSHIPS_DIR""$relationshipFile"_"$counter"_"$node1"_"$relation"_"$node2"
