@@ -1,17 +1,23 @@
 #!/bin/bash
 
+#********************************************************************
+
 . CONFIG_FILE
+
+#--MODULE1_3--#
 
 #--ABSTRACT NODES FROM ONTOLOGY--#
 
-cp EXTRA_NODES_uniq "$NODE_FILES";
+cp ONTOLOGY_NODES_uniq "$NODE_FILES";
 
 #--NODES.CSV--#
 
-cat "$NODE_FILES"*_uniq | sort -u > "$NODE_FILES"temp_nodes;
+mkdir -p "$RELATIONSHIPS_DIR"TEMP;
+
+cat "$NODE_FILES"*_uniq | sort -T "$RELATIONSHIPS_DIR"TEMP/ -u > "$NODE_FILES"temp_nodes;
 cat header_nodes.csv "$NODE_FILES"temp_nodes > "$NODE_FILES"nodes.csv;
 rm "$NODE_FILES"temp_nodes;
-
+rm -r "$RELATIONSHIPS_DIR"TEMP;
 
 #--NODES_INDEX.CSV--#
 
@@ -64,9 +70,12 @@ for file in "$NODE_IND_FILES"*_underscores;do
 		elif [[ "$filename" ==  "POP_LOCATION_STATE_NAME_POP_ZIP_CODE" ]];then
 			filename='STATE_ZIP'
 			mv "$file" "$NODE_IND_FILES""$filename"_spaces_trimmed_conversion_to_underscores
-fi
+		fi
 
-awk 'NR==FNR{a[$2]=$1;next}{$1=a[$1];}1' "$NODE_FILES"nodes_index.csv "$NODE_IND_FILES""$filename"_spaces_trimmed_conversion_to_underscores > "$INDICES_DIR""$filename"_replaced_by_indices
+	awk 'NR==FNR{a[$2]=$1;next}{$1=a[$1];}1' "$NODE_FILES"nodes_index.csv "$NODE_IND_FILES""$filename"_spaces_trimmed_conversion_to_underscores > "$INDICES_DIR""$filename"_replaced_by_indices;
 
 done
 
+echo "MODULE1_3 finished";
+
+#********************************************************************

@@ -1,0 +1,13 @@
+#********************************************************************
+
+. CONFIG_FILE
+
+mkdir -p "$RELATIONSHIPS_DIR"TEMP_"$line";
+mkdir -p "$RELATIONSHIPS_DIR"TEMP1_"$line";
+cat "$RELATIONSHIPS_DIR""$line"/*_only_rels | sort -T "$RELATIONSHIPS_DIR"TEMP_"$line"/ -u | sort -T "$RELATIONSHIPS_DIR"TEMP1_"$line"/ -n -k 1,1 > "$RELATIONSHIPS_DIR""$line"/BATCH_"$num_count"_"$line";
+rm "$RELATIONSHIPS_DIR""$line"/*_only_rels;
+cat "$PWD"/header_rels.csv "$RELATIONSHIPS_DIR""$line"/BATCH_"$num_count"_"$line" > "$RELATIONSHIPS_DIR"BATCH_"$num_count"_"$line".csv;
+rm -r "$RELATIONSHIPS_DIR""$line";
+rm -r "$RELATIONSHIPS_DIR"TEMP_"$line" "$RELATIONSHIPS_DIR"TEMP1_"$line";
+
+#********************************************************************

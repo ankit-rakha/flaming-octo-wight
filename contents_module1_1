@@ -2,9 +2,7 @@
 
 #--contents begin here--#
 
-awk -v var="$col" < "$INPUT_PATH""$RDMS_DUMP_NAME" 'BEGIN { RS = "\f"; FS = "\0"; ORS="\n" } {print $var}' > "$OUTPUT_PATH""$col_name"_temp;
-
-"$PACKAGE_DIR"scientific_conversion.pl "$OUTPUT_PATH""$col_name"_temp > "$OUTPUT_PATH""$col_name";
+awk -v var="$col" < "$INPUT_PATH""$RDMS_DUMP_NAME" 'BEGIN { RS = "\f"; FS = "\0"; ORS="\n" } {print $var}' > "$OUTPUT_PATH""$col_name";
 
 sed -e 's/^[ \t]*//;s/[ \t]*$//' "$OUTPUT_PATH""$col_name" > "$OUTPUT_PATH""$col_name"_spaces_trimmed;
 
@@ -14,9 +12,9 @@ sed -e '/^$/d' "$OUTPUT_PATH""$col_name"_spaces_trimmed_conversion_to_underscore
 
 mkdir -p "$RELATIONSHIPS_DIR"TEMP_"$col_name";
 
-sort -T "$RELATIONSHIPS_DIR"TEMP_"$col_name"/ -u "$OUTPUT_PATH""$col_name"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces | sed 's/^/\t/g' > "$OUTPUT_PATH""$col_name"_uniq;
+sort -T "$RELATIONSHIPS_DIR"TEMP_"$col_name"/ -u "$OUTPUT_PATH""$col_name"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces > "$OUTPUT_PATH""$col_name"_uniq;
 
-rm "$OUTPUT_PATH""$col_name" "$OUTPUT_PATH""$col_name"_spaces_trimmed "$OUTPUT_PATH""$col_name"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces "$OUTPUT_PATH""$col_name"_temp;
+rm "$OUTPUT_PATH""$col_name" "$OUTPUT_PATH""$col_name"_spaces_trimmed "$OUTPUT_PATH""$col_name"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces;
 mv "$OUTPUT_PATH""$col_name"_spaces_trimmed_conversion_to_underscores "$NODE_IND_FILES";
 mv "$OUTPUT_PATH""$col_name"_uniq "$NODE_FILES";
 rm -r "$RELATIONSHIPS_DIR"TEMP_"$col_name";

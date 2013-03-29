@@ -1,3 +1,0 @@
-node1_id=$(grep -w "$node1" "$NODE_FILES"nodes_index.csv | awk '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//')
-node2_id=$(grep -w "$node2" "$NODE_FILES"nodes_index.csv | awk '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//')
-printf "%s\t%s\t%s\n" "$node1_id" "$node2_id" "$relation" > "$RELATIONSHIPS_DIR""$relationshipFile"_"$counter"_"$node1"_"$relation"_"$node2"

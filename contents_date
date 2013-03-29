@@ -1,23 +1,40 @@
-<<<<<<< HEAD
-#awk -v var="$col" < "$INPUT_PATH""$RDMS_DUMP_NAME" 'BEGIN { RS = "\f"; FS = "\0"; ORS="\n" } {print $var}' | head -n 100 > "$OUTPUT_PATH""$col_name"
-awk -v var="$col" < "$INPUT_PATH""$RDMS_DUMP_NAME" 'BEGIN { RS = "\f"; FS = "\0"; ORS="\n" } {print $var}' > "$OUTPUT_PATH""$col_name"
-=======
-awk -v var="$col" < "$INPUT_PATH""$RDMS_DUMP_NAME" 'BEGIN { RS = "\f"; FS = "\0"; ORS="\n" } {print $var}' | head -n 100 > "$OUTPUT_PATH""$col_name"
->>>>>>> bc04ab371a09678a3c962804700a9f423237e20d
-awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' > "$OUTPUT_PATH""$col_name"_DATE
-awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' > "$OUTPUT_PATH""$col_name"_YEAR
-awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $2}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | sed -e 's/^0//g' > "$OUTPUT_PATH""$col_name"_MONTH
-awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $3}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | sed -e 's/^0//g' > "$OUTPUT_PATH""$col_name"_DAY
-rm "$OUTPUT_PATH""$col_name"
+#********************************************************************
+
+awk -v var="$col" < "$INPUT_PATH""$RDMS_DUMP_NAME" 'BEGIN { RS = "\f"; FS = "\0"; ORS="\n" } {print $var}' > "$OUTPUT_PATH""$col_name";
+
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' > "$OUTPUT_PATH""$col_name"_DATE;
+
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' > "$OUTPUT_PATH""$col_name"_YEAR;
+
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $2}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | sed -e 's/^0//g' > "$OUTPUT_PATH""$col_name"_MONTH;
+
+awk < "$OUTPUT_PATH""$col_name" '{print $1}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | awk -F"-" '{print $3}' | sed -e 's/^[ \t]*//;s/[ \t]*$//' | sed -e 's/^0//g' > "$OUTPUT_PATH""$col_name"_DAY;
+
+rm "$OUTPUT_PATH""$col_name";
 
 function conversion(){
 
-	sed -e 's/[ \t]\+/_/g' -e 's/,//g' "$1""$2" > "$1""$2"_spaces_trimmed_conversion_to_underscores
-	sed -e '/^$/d' "$1""$2"_spaces_trimmed_conversion_to_underscores > "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
-	sort -u "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces > "$1""$2"_uniq
-	rm "$1""$2" "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
-	mv "$1""$2"_spaces_trimmed_conversion_to_underscores "$NODE_IND_FILES"
-	mv "$1""$2"_uniq "$NODE_FILES"
+	sed -e 's/[ \t]\+/_/g' -e 's/,//g' "$1""$2" > "$1""$2"_spaces_trimmed_conversion_to_underscores;
+	sed -e '/^$/d' "$1""$2"_spaces_trimmed_conversion_to_underscores > "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces;
+	
+	#--CONTAINERS--#
+	
+	mkdir -p "$RELATIONSHIPS_DIR"TEMP_"$2";
+	
+	if [ "$2" == "$col_name"_DATE ];then
+	
+		sort -T "$RELATIONSHIPS_DIR"TEMP_"$2"/ -u "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces > "$1""$2"_uniq;
+		
+	else
+	
+		sort -T "$RELATIONSHIPS_DIR"TEMP_"$2"/ -u "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces | sed 's/^/\t\t/g' > "$1""$2"_uniq;
+		
+	fi
+	
+	rm "$1""$2" "$1""$2"_spaces_trimmed_conversion_to_underscores_removed_blank_spaces;
+	mv "$1""$2"_spaces_trimmed_conversion_to_underscores "$NODE_IND_FILES";
+	mv "$1""$2"_uniq "$NODE_FILES";
+	rm -r "$RELATIONSHIPS_DIR"TEMP_"$2";
 
 }
 
@@ -25,13 +42,5 @@ conversion "$OUTPUT_PATH" "$col_name"_DATE
 conversion "$OUTPUT_PATH" "$col_name"_YEAR
 conversion "$OUTPUT_PATH" "$col_name"_MONTH
 conversion "$OUTPUT_PATH" "$col_name"_DAY
-<<<<<<< HEAD
 
-#sed -e 's/[ \t]\+/_/g' -e 's/,//g' "$OUTPUT_PATH""$col_name"_YEAR > "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores
-#sed -e '/^$/d' "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores > "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
-#sort -u "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces > "$OUTPUT_PATH""$col_name"_YEAR_uniq
-#rm "$OUTPUT_PATH""$col_name"_YEAR "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores_removed_blank_spaces
-#mv "$OUTPUT_PATH""$col_name"_YEAR_spaces_trimmed_conversion_to_underscores "$NODE_IND_FILES"
-#mv "$OUTPUT_PATH""$col_name"_YEAR_uniq "$NODE_FILES"
-=======
->>>>>>> bc04ab371a09678a3c962804700a9f423237e20d
+#********************************************************************

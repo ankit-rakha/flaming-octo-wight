@@ -3,6 +3,7 @@ COMPLETION_DAY 	 Day 	 is_a
 COMPLETION_MONTH 	 Month 	 is_a
 COMPLETION_YEAR 	 Year 	 is_a
 CONTRACTING_OFFICE_NAME 	 Organization 	 is_a
+DATE_RANGE	DATE_RANGE	is_a
 DOLLARS_OBLIGATED_PER_ACTION 	 Money 	 is_a
 EFFECTIVE_DATE 	 Date 	 is_a
 EFFECTIVE_DAY 	 Day 	 is_a

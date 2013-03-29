@@ -1,5 +1,15 @@
+#********************************************************************
+
 num_lines2=$(wc -l < "$INDICES_DIR""$node1"_replaced_by_indices);
-mkdir -p "$RELATION_TYPE_DIR""$node1"_"$relation"_"$node2"
+
+#--CREATE CONTAINERS--#
+
+mkdir -p "$RELATION_TYPE_DIR""$node1"_"$relation"_"$node2";
+
 yes "$relation" | head -n "$num_lines2" > "$RELATION_TYPE_DIR""$node1"_"$relation"_"$node2"/"$relation";
+
 paste -d"\t" "$INDICES_DIR""$node1"_replaced_by_indices "$INDICES_DIR""$node2"_replaced_by_indices "$RELATION_TYPE_DIR""$node1"_"$relation"_"$node2"/"$relation" > "$RELATIONSHIPS_DIR""$relationshipFile"_"$counter"_"$node1"_"$relation"_"$node2";
+
 rm -r "$RELATION_TYPE_DIR""$node1"_"$relation"_"$node2"/"$relation";
+
+#********************************************************************

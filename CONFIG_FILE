@@ -1,7 +1,7 @@
-INPUT_PATH="/usr2/contracts_dump/"
+INPUT_PATH="/usr2/contracts_dump/";
 OUTPUT_PATH="/usr5/contracts/OUTPUT/";
 temp_RDMS_DUMP_NAME="all_awardidv.nsv.gz";
-RDMS_DUMP_NAME=usable_"$temp_RDMS_DUMP_NAME"
+RDMS_DUMP_NAME=usable_"$temp_RDMS_DUMP_NAME";
 RDMS_FILE="RDMS_COLUMNS.txt";
 LOG_PATH="$OUTPUT_PATH""LOGS/";
 SCRIPT_PATH="$OUTPUT_PATH""SCRIPTS/";
@@ -12,4 +12,10 @@ INDICES_DIR="$OUTPUT_PATH""REPLACED_BY_INDICES/";
 RELATION_TYPE_FILE="relation_types";
 RELATION_TYPE_DIR="$OUTPUT_PATH""RELATION_TYPES/";
 RELATIONSHIPS_DIR="$OUTPUT_PATH""RELATIONSHIPS/";
-
+head=$(which head);
+tail=$(which tail);
+awk=$(which awk);
+sed=$(which sed);
+cat=$(which cat);
+paste=$(which paste);
+wc=$(which wc);
