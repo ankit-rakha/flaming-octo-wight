@@ -12,6 +12,7 @@ INDICES_DIR="$OUTPUT_PATH""REPLACED_BY_INDICES/";
 RELATION_TYPE_FILE="relation_types";
 RELATION_TYPE_DIR="$OUTPUT_PATH""RELATION_TYPES/";
 RELATIONSHIPS_DIR="$OUTPUT_PATH""RELATIONSHIPS/";
+neo4j_database="neo4j-community-1.9.M05";
 head=$(which head);
 tail=$(which tail);
 awk=$(which awk);

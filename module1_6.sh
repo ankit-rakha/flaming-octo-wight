@@ -8,14 +8,14 @@
 
 #--CREATE GRAPH DATABASE--#
 
-tar -zxvf "$PWD"/neo4j-community-1.9.M05-unix.tar.gz;
+tar -zxvf "$PWD"/"$neo4j_database"-unix.tar.gz;
 
-mkdir -p "$PWD"/neo4j-community-1.9.M05/data/graph.db;
+mkdir -p "$PWD"/"$neo4j_database"/data/graph.db;
 
 #--CONFIGURE PARAMETERS--#
 
-cp "$PWD"/neo4j.properties "$PWD"/neo4j-community-1.9.M05/conf/
-cp "$PWD"/neo4j-wrapper.conf "$PWD"/neo4j-community-1.9.M05/conf/
+cp "$PWD"/neo4j.properties "$PWD"/"$neo4j_database"/conf/
+cp "$PWD"/neo4j-wrapper.conf "$PWD"/"$neo4j_database"/conf/
 
 rm "$PWD"/log;
 
