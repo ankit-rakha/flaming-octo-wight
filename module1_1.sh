@@ -15,6 +15,7 @@ mkdir -p "$LOG_PATH";
 mkdir -p "$NODE_IND_FILES";
 mkdir -p "$NODE_FILES";
 mkdir -p "$INDICES_DIR";
+mkdir -p "$INDICES_DIR1";
 mkdir -p "$RELATION_TYPE_DIR";
 mkdir -p "$RELATIONSHIPS_DIR";
 
